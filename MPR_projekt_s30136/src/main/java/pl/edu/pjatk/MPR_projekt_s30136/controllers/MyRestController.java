@@ -29,4 +29,14 @@ public class MyRestController {
     public void addMonkey(@RequestBody Monkey monkey) {
         this.monkeyService.add(monkey);
     }
+
+    @DeleteMapping("monkey/{id}")
+        public void deleteMonkey(@PathVariable int id){
+            this.monkeyService.delete(id);
+    }
+    @PutMapping("monkey/{id}")
+    public void updateMonkey(@PathVariable int id, @RequestBody Monkey monkey){
+        this.monkeyService.update(id,monkey);
+    }
+
 }
