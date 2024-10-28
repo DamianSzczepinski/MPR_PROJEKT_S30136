@@ -6,38 +6,41 @@ import pl.edu.pjatk.MPR_projekt_s30136.model.Monkey;
 import pl.edu.pjatk.MPR_projekt_s30136.services.MonkeyService;
 
 import java.util.List;
-@RestController
+import java.util.Optional;
 
+@RestController
+@RequestMapping("/monkey")
 public class MyRestController {
-    private MonkeyService monkeyService;
+
+    private final MonkeyService monkeyService;
 
     @Autowired
     public MyRestController(MonkeyService monkeyService) {
         this.monkeyService = monkeyService;
     }
 
-    @GetMapping("monkey/all")
-    public List<Monkey> getAll() {
-        return this.monkeyService.getMonkeyList();
+    @GetMapping("/name/{name}")
+    public List<Monkey> getMonkeyByName(@PathVariable String name) {
+        return this.monkeyService.getbyName(name);
     }
 
-    @GetMapping("monkey/{id}")
-    public Monkey get(@PathVariable Integer id) {
+    @GetMapping("/all")
+    public List<Monkey> getAll() {
+        return this.monkeyService.getAllMonkeys();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Monkey> get(@PathVariable Integer id) {
         return this.monkeyService.getMonkey(id);
     }
 
-    @PostMapping("monkey")
+    @PostMapping
     public void addMonkey(@RequestBody Monkey monkey) {
-        this.monkeyService.add(monkey);
+        this.monkeyService.addMonkey(monkey);
     }
 
-    @DeleteMapping("monkey/{id}")
-        public void deleteMonkey(@PathVariable int id){
-            this.monkeyService.delete(id);
+    @DeleteMapping("/{id}")
+    public void deleteMonkey(@PathVariable int id) {
+        this.monkeyService.deleteMonkey(id);
     }
-    @PutMapping("monkey/{id}")
-    public void updateMonkey(@PathVariable int id, @RequestBody Monkey monkey){
-        this.monkeyService.update(id,monkey);
-    }
-
 }
